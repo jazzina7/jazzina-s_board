@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- JS -->
-    <script src="h₩₩ttps://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
@@ -29,6 +29,29 @@
       border; 50px
       }
     </style>
+    <script>
+      function posting(){
+
+        let mothers_name = $('#mother-name').val();
+        let babys_name = $('#baby-name').val();
+        let babys_id = $('#baby-id').val();
+        let password = $('#password').val();
+        
+
+        $.ajax({
+          type: "POST",
+          url: "/reg",
+          data: {babys_id_give:babys_id,mothers_name_give:mothers_name,babys_name_give:babys_name,password_give:password},
+          success: function(rrr){
+            if (rrr['result'] == 'success'){
+             alert("welcome")    // 알럿도 띄워주고
+             location.replace("/")
+            }
+          }
+        })
+      }
+
+    </script>
 
 </head>
 
@@ -39,28 +62,28 @@
   <div class="input-group-prepend">
     <span class="input-group-text" id="inputGroup-sizing-lg">엄마이름</span>
   </div>
-  <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
-</div>
+  <input id="mother-name" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+</div> 
 <div class="input-group input-group-lg">
   <div class="input-group-prepend">
     <span class="input-group-text" id="inputGroup-sizing-lg">아기이름</span>
   </div>
-  <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+  <input id="baby-name" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
 </div>
 <div class="input-group input-group-lg">
   <div class="input-group-prepend">
     <span class="input-group-text" id="inputGroup-sizing-lg">아기번호</span>
   </div>
-  <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+  <input id="baby-id" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
 </div>
 <div class="input-group input-group-lg">
   <div class="input-group-prepend">
     <span class="input-group-text" id="inputGroup-sizing-lg">비밀번호</span>
   </div>
-  <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+  <input id="password" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
 </div>
 <div class="two">
-<button type="submit" class="btn btn-primary">회원가입</button>
+<button onclick="posting()" class="btn btn-primary">회원가입</button>
 </div>
 </div>
 </body>

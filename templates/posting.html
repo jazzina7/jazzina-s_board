@@ -1,63 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>글쓰기</title>
- <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="UTF-8">
+  <title>글쓰기</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <!-- JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<script>
-function resize(obj) {
-  obj.style.height = "1px";
-  obj.style.height = (12+obj.scrollHeight)+"px";
-}
-</script>
-
-<style>
-  div.one {
+  <script>
+    function resize(obj) {
+      obj.style.height = "1px";
+      obj.style.height = (12+obj.scrollHeight)+"px";
+    }
+    function posting(){
+      let title = $('#title').val();
+      let content= $('#content').val();
+      
+      $.ajax({
+        type: "POST",
+        url: "/posting",
+        data: {title_give:title,content_give:content},
+        success: function(rrr){
+         if (rrr['result'] == 'success'){
+           location.replace("/board")
+         }
+       }
+     })
+    }
+  </script>
+  <style>
+    div.one {
       width : 60%;
       height : 60%;
       padding : 20px;
       border; 50px
-      }
-      div.two {
+    }
+    div.two {
       width : 60%;
       height : 60%;
       padding : 20px;
       border; 50px
-      }
-      textarea.autosize {min-height: 50px;}
-</style>
+    }
+    textarea.autosize {min-height: 50px;}
+  </style>
 
 </head>
 
 <body>
-<div class="one">
-<h1>글쓰기</h1>
-<div class="form-post">
+  <div class="one">
+    <h1>글쓰기</h1>
+    <div class="form-post">
       <form>
         <div class="form-group">
           <label for="exampleFormControlInput1">제목</label>
-          <input class="form-control" placeholder="">
+          <input id="title" class="form-control" placeholder="">
         </div>
         <div class="form-group autosize">
           <label for="exampleFormControlTextarea1">내용</label>
-          <textarea class="form-control" onkeydown="resize(this)" onkeyup="resize(this)" rows="3"></textarea>
+          <textarea id="content" class="form-control" onkeydown="resize(this)" onkeyup="resize(this)" rows="3"></textarea>
         </div>
         <div class="two">
-        <button type="button" class="btn btn-primary">글저장</button>
-      </div>
+          <button onclick="posting()" class="btn btn-primary">글저장</button>
+        </div>
       </form>
     </div>
-</div>
+  </div>
 </body>
 </html>
