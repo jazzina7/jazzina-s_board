@@ -22,8 +22,6 @@ def page_board():
    return render_template('board.html')
 
 
-
-
 ## API 역할을 하는 부분
 @app.route('/reg', methods=['POST']) # 회원가입하는 페이지
 def register():

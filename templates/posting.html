@@ -15,6 +15,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+  <script src="{{ url_for('static', filename = 'js/cookie.js') }}"></script>
+
   <script>
     function resize(obj) {
       obj.style.height = "1px";
@@ -23,14 +25,21 @@
     function posting(){
       let title = $('#title').val();
       let content= $('#content').val();
+
+      let myid = getCookie('myid');
+      let mypw = getCookie('mypw');
       
       $.ajax({
         type: "POST",
-        url: "/posting",
-        data: {title_give:title,content_give:content},
+        url: "/post",
+        data: {title_give:title,content_give:content,babys_id_give:myid,password_give:mypw},
         success: function(rrr){
          if (rrr['result'] == 'success'){
-           location.replace("/board")
+           alert('작성완료!');
+           location.replace("/board");
+         } else {
+           alert('유효하지 않은 접근입니다');
+           location.replace("/")
          }
        }
      })
@@ -58,7 +67,7 @@
   <div class="one">
     <h1>글쓰기</h1>
     <div class="form-post">
-      <form>
+      <div>
         <div class="form-group">
           <label for="exampleFormControlInput1">제목</label>
           <input id="title" class="form-control" placeholder="">
@@ -70,7 +79,7 @@
         <div class="two">
           <button onclick="posting()" class="btn btn-primary">글저장</button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </body>

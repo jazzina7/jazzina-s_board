@@ -15,20 +15,60 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+    <script src="{{ url_for('static', filename = 'js/cookie.js') }}"></script>
+
     <style>
       div.jumbotron {
-      background-color: white;
-      height : 60%;
-      padding : 20px;
-      border; 50px
+        background-color: white;
+        height : 60%;
+        padding : 20px;
+        border; 50px
       }
       .card-text.comment {
         color: blue;
       }
     </style>
+    <script type="text/javascript">
+      $( document ).ready(function() {
+          // 이 안에는 화면이 다 로딩되면 자동으로 불리는 함수들
+          console.log( "ready!" );
+      });
 
-</head>
-<body>
+      // 카드를 붙여주는 함수
+      function make_card(title,text,comment){
+        let temp_html = '<div class="card">\
+            <div class="card-body">\
+              <h5 class="card-title">'+title+'</h5>\
+              <p class="card-text">'+text+'</p>\
+              <p class="card-text comment">'+comment+'</p>\
+            </div>\
+          </div>'
+        $('#post-cards').append(temp_html);
+      }
+
+      // board API와 통신하는 함수
+      function get_board(){
+        let myid = getCookie('myid');
+        let mypw = getCookie('mypw');
+
+        $.ajax({
+          type: "POST",
+          url: "/board",
+          data: {babys_id_give:myid,password_give:mypw},
+          success: function(rrr){
+           if (rrr['result'] == 'success'){
+             console.log(rrr['articles']);
+           } else {
+             alert('유효하지 않은 접근입니다');
+             location.replace("/");
+           }
+         }
+       })
+      }
+
+    </script>
+  </head>
+  <body>
   <div class="jumbotron">
     <h1>Hello, world!</h1>
     <button class="btn btn-primary" onclick="location.href='/posting'">글쓰기</button>

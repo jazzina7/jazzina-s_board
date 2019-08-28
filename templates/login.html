@@ -1,65 +1,71 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
 
-      <!-- Webpage Title -->
-    <title>로그인</title>
+  <!-- Webpage Title -->
+  <title>로그인</title>
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <!-- JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-   
-       <script>
-      function posting(){
-        let babys_id = $('#id').val();
-        let password = $('#password').val();
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-        $.ajax({
-          type: "POST",
-          url: "/login",
-          data: {babys_id_give:babys_id,password_give:password},
-          success: function(rrr){
-            if (rrr['result'] == 'success'){
-             location.replace("/board")
-            }
-          }
-        })
+  <script src="{{ url_for('static', filename = 'js/cookie.js') }}"></script>
+
+  <script>
+    function posting(){
+      let babys_id = $('#id').val();
+      let password = $('#password').val();
+
+      $.ajax({
+        type: "POST",
+        url: "/login",
+        data: {babys_id_give:babys_id,password_give:password},
+        success: function(rrr){
+          if (rrr['result'] == 'success'){
+           setCookie('myid',babys_id,1);
+           setCookie('mypw',password,1);
+           location.replace("/board");
+         } else {
+          alert('아이디 또는 비밀번호가 틀립니다')
+        }
       }
-    </script>
+    })
+    }
+  </script>
 
 
-    <style>
-      .one {
+  <style>
+    .one {
       width : 60%;
       height : 60%;
       padding : 20px;
       border; 50px
-      }
-    </style>
+    }
+  </style>
 
-  </head>
-  <body>
+</head>
+<body>
   <div class="one">
-  <h1>회원전용 페이지에 로그인합니다</h1>
+    <h1>회원전용 페이지에 로그인합니다</h1>
     <div class="form-group">
-        <label for="exampleDropdownFormEmail2">ID</label>
-        <input id="id" type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="ID">
-      </div>
-      <div class="form-group">
-        <label class="temp" for="exampleDropdownFormPassword2">Password</label>
-        <input id="password" type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
-      </div>
-        <button onclick="posting()" class="btn btn-primary">login</button>
-      <button class="btn btn-primary" onclick="location.href='/register'">회원가입</button>
+      <label for="exampleDropdownFormEmail2">ID</label>
+      <input id="id" type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="ID">
     </div>
-  </body>
+    <div class="form-group">
+      <label class="temp" for="exampleDropdownFormPassword2">Password</label>
+      <input id="password" type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
+    </div>
+    <button onclick="posting()" class="btn btn-primary">login</button>
+    <button class="btn btn-primary" onclick="location.href='/register'">회원가입</button>
+  </div>
+</body>
 </html>
 </html>
