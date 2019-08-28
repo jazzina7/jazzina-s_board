@@ -31,7 +31,8 @@
     <script type="text/javascript">
       $( document ).ready(function() {
           // 이 안에는 화면이 다 로딩되면 자동으로 불리는 함수들
-          console.log( "ready!" );
+          $('#post-cards').html('');
+          get_board();
       });
 
       // 카드를 붙여주는 함수
@@ -40,7 +41,7 @@
             <div class="card-body">\
               <h5 class="card-title">'+title+'</h5>\
               <p class="card-text">'+text+'</p>\
-              <p class="card-text comment">'+comment+'</p>\
+              <p class="card-text comment">'+(comment == '' ? '코멘트가 없습니다' : comment)+'</p>\
             </div>\
           </div>'
         $('#post-cards').append(temp_html);
@@ -57,7 +58,14 @@
           data: {babys_id_give:myid,password_give:mypw},
           success: function(rrr){
            if (rrr['result'] == 'success'){
-             console.log(rrr['articles']);
+             let cards = rrr['articles'];
+             for (let i = 0 ; i < cards.length; i++) {
+              let title = cards[i]['title'];
+              let content = cards[i]['content'];
+              let comment = cards[i]['comment'];
+
+              make_card(title,content,comment);
+            }
            } else {
              alert('유효하지 않은 접근입니다');
              location.replace("/");

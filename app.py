@@ -59,7 +59,7 @@ def post():
 
 
    result = db.users.find_one({'babys_id': babys_id_receive, 'password': password_receive})
-   postings = {'babys_id':babys_id_receive, 'title':title_receive, 'content':content_receive}
+   postings = {'babys_id':babys_id_receive, 'title':title_receive, 'content':content_receive, 'comment':''}
 
    if result is not None:
       db.lists.insert_one(postings)
